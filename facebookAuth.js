@@ -8,6 +8,7 @@ const client_secret = 'client secret';
 const app_id = 'app id';
 
 
+
 route.get('/', async (req, res) => {
 
    try {
@@ -15,7 +16,8 @@ route.get('/', async (req, res) => {
       // this is needed in order to verify user token
       const url = await axios.get(`https://graph.facebook.com/oauth/access_token?client_id=${app_id}&client_secret=${client_secret}&grant_type=client_credentials`);
 
-   const app_token = await url.data;
+   const app_token = await url.data.access_token;
+
    
    // verity user token, this will return a response  if everything went okay
    const inspect_token_url = await axios.get(`https://graph.facebook.com/debug_token?input_token=${user_token}&access_token=${app_token}`);
@@ -49,7 +51,6 @@ route.get('/', async (req, res) => {
          access_token: user_token
       }
    })
-
 
    res.status(200).json(data); 
    } catch (error) {
