@@ -3,9 +3,10 @@ const axios = require('axios');
 
 const route = express.Router();
 
-const user_token = "token will be coming from the client side"
-const client_secret = 'your client secret';
-const app_id = 'you app id';
+const user_token = "user token"
+const client_secret = 'client secret';
+const app_id = 'app id';
+
 
 
 route.get('/', async (req, res) => {
@@ -16,6 +17,7 @@ route.get('/', async (req, res) => {
       const url = await axios.get(`https://graph.facebook.com/oauth/access_token?client_id=${app_id}&client_secret=${client_secret}&grant_type=client_credentials`);
 
    const app_token = await url.data.access_token;
+
    
    // verity user token, this will return a response  if everything went okay
    const inspect_token_url = await axios.get(`https://graph.facebook.com/debug_token?input_token=${user_token}&access_token=${app_token}`);
